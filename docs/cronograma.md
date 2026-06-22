@@ -1,108 +1,52 @@
-```markdown
-# Cronograma del Proyecto Integrador - Semanas 1 a 8
+# Cronograma del Proyecto Integrador
 
-**Estudiante:** Elizabeth Cardona  
-**Asignatura:** Programación Orientada a Objetos  
-**Institución:** Universidad Internacional del Ecuador (UIDE)  
-**Fecha de entrega final:** 28 de junio de 2026
+## Sistema de Gestión E-commerce en Golang
 
----
+**Estudiante:** Elizabeth Cardona
+**Asignatura:** Programación Orientada a Objetos
+**Fecha:** Junio 2026
 
-## Tabla Maestra de Actividades
-
-| Semana | Unidad | Tema | Actividad Principal | Entregable | Estado |
-|--------|--------|------|---------------------|------------|--------|
-| S1 | U1 | T1-T2 | Selección del sistema y planificación | README.md, docs/roadmap.md | Completado |
-| S2 | U1 | T1-T2 | Estructura funcional y paquetes | Estructura de carpetas | Completado |
-| S3 | U2 | T3-T4 | POO en Go: structs, interfaces | models/product.go | Completado |
-| S4 | U2 | T3-T4 | Errores tipados y validación | errors/domain.go | Completado |
-| S5 | U3 | T5-T6 | Servicios web REST + JSON | api/handlers.go | Completado |
-| S6 | U3 | T5-T6 | Concurrencia con goroutines | HandleConcurrency() | Completado |
-| S7 | U4 | T7-T8 | Pruebas y documentación | tests/api_test.go | Completado |
-| S8 | U4 | T7-T8 | Integración final y entrega | Repo, PDF, video | En progreso |
+| Semana | Unidad   | Tema   | Actividades Realizadas                                                                                                          |
+| ------ | -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| S1     | Unidad 1 | Tema 1 | Selección del sistema de gestión empresarial. Definición del objetivo general y alcance del proyecto E-commerce.                |
+| S2     | Unidad 1 | Tema 2 | Identificación de módulos principales del sistema. Diseño preliminar de la arquitectura y análisis de requerimientos.           |
+| S3     | Unidad 2 | Tema 3 | Configuración del entorno de desarrollo en Golang. Creación de la estructura base del proyecto y repositorio GitHub.            |
+| S4     | Unidad 2 | Tema 4 | Desarrollo de entidades principales mediante structs e interfaces. Aplicación de encapsulación y validaciones.                  |
+| S5     | Unidad 3 | Tema 5 | Implementación de servicios de negocio para gestión de productos y pedidos. Manejo de errores personalizados.                   |
+| S6     | Unidad 3 | Tema 6 | Desarrollo de servicios web REST con serialización JSON. Implementación de endpoints para operaciones principales.              |
+| S7     | Unidad 4 | Tema 7 | Implementación de concurrencia utilizando goroutines, WaitGroup y Mutex. Desarrollo de pruebas unitarias e integración.         |
+| S8     | Unidad 4 | Tema 8 | Integración final del sistema. Documentación, elaboración del informe, video demostrativo, presentación y despliegue en GitHub. |
 
 ---
 
-## Hitos Críticos
+## Resumen de Integración de las 4 Unidades
 
-### Hito 1: Unidad 2 Completada (Semana 4)
-- Struct Product con campos privados
-- Interfaz IProduct con contrato completo
-- Constructor NewProduct() con validación
-- Errores de dominio tipados
-- Tests unitarios con cobertura >80%
+### Unidad 1
 
-### Hito 2: Servicios Web Operativos (Semana 6)
-- 8 endpoints REST funcionales
-- Serialización JSON con encoding/json
-- Validación de payloads en handlers
-- Respuestas HTTP con códigos semánticos
-- Documentación de API en README.md
+* Análisis del problema.
+* Definición de objetivos.
+* Diseño de la estructura general del sistema.
 
-### Hito 3: Concurrencia y Pruebas (Semana 7)
-- Endpoint /api/concurrent con goroutines
-- Uso correcto de sync.RWMutex
-- Tests de integración con httptest
-- go test -race sin data races
-- Rendimiento: <15ms para 100 requests
+### Unidad 2
 
-### Hito 4: Entrega Final (Semana 8)
-- Informe PDF con arquitectura y pruebas
-- Video demo de 3-4 minutos
-- Presentación con 8 slides
-- README.md completo con alineación de rúbrica
-- Repo GitHub limpio y profesional
+* Desarrollo de componentes principales.
+* Implementación de programación orientada a objetos en Go mediante structs e interfaces.
+
+### Unidad 3
+
+* Creación de servicios web REST.
+* Serialización y deserialización de datos utilizando JSON.
+* Manejo de errores.
+
+### Unidad 4
+
+* Implementación de concurrencia mediante goroutines.
+* Pruebas de software.
+* Integración final y documentación.
 
 ---
 
-## Métricas de Progreso
+## Resultado Final
 
-| Indicador | Meta | Actual | Estado |
-|-----------|------|--------|--------|
-| Cobertura de pruebas | >= 85% | 92% | Superado |
-| Endpoints funcionales | 8 | 9 | Superado |
-| Tiempo respuesta | < 50ms | 12ms | Superado |
-| Data races | 0 | 0 | Cumplido |
-| Documentación | 3 archivos | 4 archivos | Superado |
+Se desarrolló un Sistema de Gestión E-commerce en Golang que integra conceptos de programación orientada a objetos, servicios web REST, serialización JSON, manejo de errores, pruebas de software y concurrencia, cumpliendo los requisitos establecidos para el proyecto integrador de las cuatro unidades de la asignatura.
 
----
-
-## Reflexión del Proceso
-
-Este proyecto demostró que la Programación Orientada a Objetos trasciende lenguajes específicos. Los principios de encapsulamiento, abstracción y polimorfismo se implementan en Go mediante structs, interfaces implícitas y composición.
-
-La mayor dificultad fue adaptar el mindset de herencia a composición, pero el resultado fue un código más flexible y testeable. La concurrencia nativa de Go permitió demostrar escalabilidad real sin complejidad artificial.
-
-Aprendimos que la tecnología debe servir al dominio del problema, no al revés.
-
----
-
-## Checklist de Entrega Final
-
-- [x] Repo GitHub público con estructura profesional
-- [x] Código Go compilable sin errores
-- [x] Pruebas pasando con go test -race
-- [x] Documentación técnica completa en docs/
-- [x] README.md con API reference y rúbrica
-- [ ] Informe PDF exportado
-- [ ] Video demo grabado
-- [ ] Presentación lista
-- [ ] Todo subido a plataforma UIDE
-
----
-
-## Comandos de Verificación
-
-```bash
-# Verificar compilación
-go build ./...
-
-# Ejecutar pruebas
-go test ./tests/... -v -race
-
-# Verificar formato
-gofmt -d .
-
-# Probar servidor
-go run main.go &
-curl http://localhost:8080/health
