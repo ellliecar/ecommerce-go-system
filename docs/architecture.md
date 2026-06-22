@@ -1,24 +1,122 @@
-```markdown
 # Arquitectura del Sistema
 
 ## Sistema de Gestión E-commerce en Golang
 
-**Estudiante:** Elizabeth Cardona  
-**Asignatura:** Programación Orientada a Objetos  
-**Lenguaje:** Golang  
-**Fecha:** Junio 2026  
+**Estudiante:** Elizabeth Cardona
+**Asignatura:** Programación Orientada a Objetos
+**Lenguaje:** Golang
+**Fecha:** Junio 2026
 
 ---
 
 # 1. Descripción General
 
-El proyecto consiste en un Sistema de Gestión E-commerce desarrollado en Golang. Su objetivo es administrar productos, pedidos y operaciones comerciales mediante servicios web REST utilizando serialización JSON.
+El Sistema de Gestión E-commerce es una aplicación desarrollada en Golang que permite administrar productos, procesar pedidos y exponer funcionalidades mediante servicios web REST.
 
-La arquitectura fue diseñada siguiendo principios de programación orientada a objetos adaptados a Go mediante el uso de structs, interfaces, encapsulación, manejo de errores y concurrencia.
+La solución integra los conceptos estudiados durante las cuatro unidades de la asignatura, incluyendo programación orientada a objetos, interfaces, encapsulación, manejo de errores, serialización JSON, concurrencia y pruebas de software.
+
+El objetivo principal es demostrar la aplicación práctica de los fundamentos de desarrollo de software mediante una arquitectura modular, escalable y mantenible.
 
 ---
 
-# 2. Estructura del Proyecto
+# 2. Objetivo del Sistema
+
+Desarrollar un sistema de gestión E-commerce que permita administrar productos y pedidos utilizando servicios web REST, aplicando buenas prácticas de programación en Golang, principios de orientación a objetos, manejo de errores y procesamiento concurrente.
+
+---
+
+# 3. Arquitectura General del Sistema
+
+```mermaid
+flowchart TD
+
+    U[Usuario / Cliente]
+    API[API REST]
+    BL[Lógica de Negocio]
+    MOD[Modelos e Interfaces]
+    ERR[Manejo de Errores]
+    CON[Concurrencia]
+    JSON[Serialización JSON]
+
+    U -->|Solicitudes HTTP| API
+    API --> BL
+    BL --> MOD
+    BL --> ERR
+    BL --> CON
+    API --> JSON
+    JSON -->|Respuestas HTTP| U
+```
+
+## Descripción de la Arquitectura
+
+La arquitectura implementa una separación clara de responsabilidades mediante capas lógicas que facilitan el mantenimiento y la escalabilidad del sistema.
+
+### Capa de Presentación (API REST)
+
+Responsable de recibir solicitudes HTTP y devolver respuestas estructuradas.
+
+Funciones:
+
+* Recepción de solicitudes GET, POST y PUT.
+* Validación básica de datos.
+* Comunicación con la lógica de negocio.
+* Serialización de respuestas JSON.
+
+### Capa de Lógica de Negocio
+
+Implementa las reglas principales del sistema.
+
+Responsabilidades:
+
+* Procesamiento de pedidos.
+* Validación de inventario.
+* Gestión de productos.
+* Coordinación de operaciones concurrentes.
+
+### Capa de Modelos e Interfaces
+
+Representa las entidades principales y los contratos del sistema.
+
+Componentes:
+
+* Product
+* IProduct
+
+Beneficios:
+
+* Encapsulación.
+* Abstracción.
+* Bajo acoplamiento.
+* Reutilización.
+
+### Capa de Manejo de Errores
+
+Controla situaciones excepcionales durante la ejecución.
+
+Ejemplos:
+
+* Producto inexistente.
+* Stock insuficiente.
+* Solicitudes inválidas.
+* Errores de procesamiento.
+
+### Capa de Concurrencia
+
+Implementada utilizando herramientas nativas de Golang:
+
+* Goroutines
+* sync.WaitGroup
+* sync.RWMutex
+
+Permite procesar múltiples solicitudes simultáneamente de forma segura.
+
+### Serialización JSON
+
+Toda la comunicación entre cliente y servidor utiliza formato JSON para garantizar interoperabilidad y compatibilidad con aplicaciones modernas.
+
+---
+
+# 4. Estructura del Proyecto
 
 ```text
 ecommerce-go-system/
@@ -26,86 +124,38 @@ ecommerce-go-system/
 ├── go.mod
 ├── README.md
 ├── internal/
-│   ├── models/
-│   │   └── product.go
-│   ├── interfaces/
-│   │   └── contracts.go
+│   ├── api/
 │   ├── errors/
-│   │   └── domain.go
-│   ├── services/
-│   │   └── order.go
-│   └── api/
-│       └── handlers.go
+│   ├── interfaces/
+│   ├── models/
+│   └── services/
 ├── tests/
-│   ├── product_test.go
-│   ├── service_test.go
-│   └── api_test.go
 └── docs/
-    ├── architecture.md
-    └── cronograma.md
 ```
 
 ---
 
-# 3. Diagrama de Arquitectura General
-
-```mermaid
-flowchart TD
-    Client[🖥️ Cliente HTTP] -->|Solicitud POST/GET + JSON| API[📡 internal/api/ handlers.go]
-    API -->|Decodifica & Valida| SVC[⚙️ internal/services/ order.go]
-    SVC -->|Invoca contrato| IF[🔌 internal/interfaces/ contracts.go]
-    IF -->|Implementa entidad| MOD[📦 internal/models/ product.go]
-    SVC -->|Sincroniza acceso| MUT[🔒 sync.RWMutex]
-    SVC -->|Captura fallos| ERR[⚠️ internal/errors/ domain.go]
-    API -->|Serializa respuesta| JSON[📋 encoding/json]
-    JSON -->|Retorna HTTP 200/400/404| Client
-
-    subgraph 🔐 Capa de Lógica y Datos
-    MOD
-    IF
-    SVC
-    MUT
-    ERR
-    end
-
-    style Client fill:#e1f5fe,stroke:#01579b
-    style API fill:#fff9c4,stroke:#fbc02d
-    style SVC fill:#e8f5e9,stroke:#2e7d32
-    style JSON fill:#e1f5fe,stroke:#01579b
-```
-
-**Explicación del flujo:**
-1. El cliente envía una solicitud HTTP con payload JSON.
-2. El handler (`api/handlers.go`) decodifica la petición y la dirige al servicio.
-3. `OrderService` orquesta la lógica de negocio, validando reglas y gestionando el estado.
-4. Se aplica el contrato `IProduct` sobre la entidad `Product`, garantizando encapsulamiento.
-5. `sync.RWMutex` protege el acceso concurrente a recursos compartidos sin bloquear lecturas innecesarias.
-6. Los errores de dominio se capturan y retornan de forma tipada.
-7. La respuesta se serializa a JSON y se devuelve al cliente con el código HTTP semántico correspondiente.
-
----
-
-# 4. Componentes Principales
+# 5. Componentes Principales
 
 ## Product
 
-Representa un producto disponible dentro del sistema.
+Representa un producto disponible para la venta.
 
-Responsabilidades:
+### Responsabilidades
 
 * Almacenar información del producto.
-* Controlar el stock.
-* Validar disponibilidad.
-* Aplicar encapsulación mediante atributos privados.
+* Gestionar el inventario.
+* Verificar disponibilidad.
+* Aplicar encapsulación.
 
-Propiedades:
+### Atributos
 
 * id
 * name
 * price
 * stock
 
-Métodos:
+### Métodos
 
 * GetID()
 * GetName()
@@ -118,9 +168,9 @@ Métodos:
 
 ## IProduct
 
-Define el contrato que deben cumplir los productos.
+Define el contrato que deben cumplir las entidades de producto.
 
-Funciones:
+### Métodos
 
 * GetID()
 * GetName()
@@ -129,27 +179,26 @@ Funciones:
 * ReduceStock()
 * IsAvailable()
 
-Beneficios:
+### Beneficios
 
-* Abstracción.
-* Bajo acoplamiento.
-* Facilidad para futuras extensiones.
+* Desacoplamiento.
+* Reutilización.
+* Extensibilidad.
 
 ---
 
 ## OrderService
 
-Gestiona el procesamiento de pedidos.
+Gestiona la lógica principal de los pedidos.
 
-Responsabilidades:
+### Responsabilidades
 
-* Validar productos.
-* Verificar stock.
-* Registrar pedidos.
-* Mantener cola de pedidos.
-* Gestionar concurrencia.
+* Validación de productos.
+* Procesamiento de pedidos.
+* Control de stock.
+* Gestión de concurrencia.
 
-Funciones principales:
+### Métodos
 
 * AddProduct()
 * ProcessOrder()
@@ -161,35 +210,36 @@ Funciones principales:
 
 Expone las funcionalidades del sistema mediante servicios web.
 
-Funciones:
+### Funciones
 
-* Recepción de solicitudes HTTP.
+* Recepción de solicitudes.
 * Procesamiento de datos JSON.
-* Respuesta estructurada al cliente.
+* Respuestas HTTP.
+* Comunicación con los servicios internos.
 
 ---
 
-# 5. Servicios Web Implementados
+# 6. Servicios Web Implementados
 
-| Endpoint           | Método | Descripción                  |
-| ------------------ | ------ | ---------------------------- |
-| /health            | GET    | Estado general del sistema   |
-| /api/products      | GET    | Consulta de productos        |
-| /api/products/{id} | GET    | Consulta individual          |
-| /api/orders        | POST   | Registro de pedidos          |
-| /api/payments      | POST   | Procesamiento de pagos       |
-| /api/users/history | GET    | Historial de compras         |
-| /api/inventory     | PUT    | Actualización de inventario  |
-| /api/analytics     | GET    | Estadísticas del sistema     |
-| /api/concurrent    | POST   | Demostración de concurrencia |
+| Endpoint           | Método | Descripción                     |
+| ------------------ | ------ | ------------------------------- |
+| /health            | GET    | Estado general del sistema      |
+| /api/products      | GET    | Consulta de productos           |
+| /api/products/{id} | GET    | Consulta individual de producto |
+| /api/orders        | POST   | Registro de pedidos             |
+| /api/payments      | POST   | Procesamiento de pagos          |
+| /api/users/history | GET    | Historial de compras            |
+| /api/inventory     | PUT    | Actualización de inventario     |
+| /api/analytics     | GET    | Estadísticas del sistema        |
+| /api/concurrent    | POST   | Demostración de concurrencia    |
 
 ---
 
-# 6. Aplicación de Programación Orientada a Objetos
+# 7. Aplicación de Programación Orientada a Objetos
 
 ## Encapsulación
 
-Los atributos internos de Product permanecen privados y sólo pueden consultarse mediante métodos públicos.
+Los atributos internos de las entidades permanecen protegidos y sólo pueden ser modificados mediante métodos controlados.
 
 ## Abstracción
 
@@ -197,65 +247,77 @@ Las interfaces permiten definir comportamientos sin exponer detalles de implemen
 
 ## Modularidad
 
-Cada componente tiene responsabilidades claramente definidas.
+Cada componente cumple una responsabilidad específica dentro de la arquitectura.
 
 ## Reutilización
 
-Los contratos mediante interfaces facilitan la reutilización del código.
+Los contratos definidos mediante interfaces facilitan la extensión del sistema.
 
 ---
 
-# 7. Manejo de Errores
+# 8. Manejo de Errores
 
-El sistema implementa errores personalizados para controlar situaciones como:
+El sistema implementa errores personalizados para garantizar un comportamiento robusto.
+
+### Casos controlados
 
 * Producto inexistente.
 * Stock insuficiente.
-* Solicitudes duplicadas.
+* Solicitudes inválidas.
 * Errores de procesamiento.
 
-Esto mejora la robustez y mantenibilidad del sistema.
+### Beneficios
+
+* Mejor experiencia de usuario.
+* Mayor mantenibilidad.
+* Código más seguro y predecible.
 
 ---
 
-# 8. Concurrencia
+# 9. Concurrencia
 
-La concurrencia se implementa utilizando:
+La concurrencia constituye uno de los componentes principales del proyecto.
+
+### Tecnologías utilizadas
 
 * Goroutines
 * sync.WaitGroup
 * sync.RWMutex
 
-Beneficios:
+### Beneficios
 
-* Procesamiento simultáneo de solicitudes.
+* Procesamiento paralelo.
+* Mayor rendimiento.
 * Protección de recursos compartidos.
-* Mayor escalabilidad.
+* Escalabilidad.
 
 ---
 
-# 9. Pruebas de Software
+# 10. Pruebas de Software
 
-Se desarrollaron pruebas para:
+Se implementaron pruebas para validar el correcto funcionamiento del sistema.
+
+### Pruebas realizadas
 
 * Validación de productos.
-* Procesamiento de pedidos.
-* Verificación de errores.
+* Gestión de pedidos.
+* Manejo de errores.
 * Integración de servicios.
+* Procesamiento concurrente.
 
-Objetivos:
+### Objetivos
 
 * Garantizar estabilidad.
 * Detectar errores tempranamente.
-* Validar el correcto funcionamiento del sistema.
+* Verificar el cumplimiento de requisitos.
 
 ---
 
-# 10. Integración de las Cuatro Unidades
+# 11. Integración de las Cuatro Unidades
 
 ## Unidad 1
 
-Análisis y diseño del sistema.
+Análisis del problema, definición de objetivos y diseño inicial.
 
 ## Unidad 2
 
@@ -263,15 +325,14 @@ Implementación de estructuras, interfaces y encapsulación.
 
 ## Unidad 3
 
-Servicios web REST y serialización JSON.
+Desarrollo de servicios web REST y serialización JSON.
 
 ## Unidad 4
 
-Concurrencia, pruebas de software e integración final.
+Implementación de concurrencia, pruebas de software e integración final.
 
 ---
 
-# 11. Conclusión
+# 12. Conclusión
 
-El Sistema de Gestión E-commerce desarrollado en Golang integra los conceptos fundamentales estudiados durante las cuatro unidades de la asignatura. La solución implementa programación orientada a objetos, servicios web, serialización JSON, manejo de errores y concurrencia, permitiendo construir una aplicación escalable, modular y mantenible.
-```
+El Sistema de Gestión E-commerce desarrollado en Golang integra los conocimientos adquiridos durante las cuatro unidades de la asignatura. La solución implementa programación orientada a objetos, servicios web REST, serialización JSON, manejo de errores, pruebas de software y concurrencia, permitiendo construir una aplicación moderna, modular, mantenible y escalable.
