@@ -1,14 +1,22 @@
-# Cronograma del Proyecto Integrador S1 - S8
+# Cronograma del Proyecto Integrador (Semanas 1-8)
 
-| Semana | Unidad / Tema                  | Actividades Principales                          | Entregables |
-|--------|--------------------------------|--------------------------------------------------|-------------|
-| S1     | U1 - Tema 1                    | Selección E-commerce + módulos (Productos, Pedidos) | Objetivo definido |
-| S2     | U1 - Tema 2                    | Estructura paquetes + programación estructurada | Paquetes internos |
-| S3     | U2 - Tema 3                    | Codificación inicial + clases                    | Modelos Product |
-| S4     | U2 - Tema 4                    | Avance + encapsulación + errores                 | OrderService |
-| S5     | U3 - Tema 5                    | Servicios Web + JSON                             | 8 endpoints |
-| S6     | U3 - Tema 6                    | Integración handlers + serialización             | API completa |
-| S7     | U4 - Tema 7                    | Concurrencia + pruebas unitarias                 | Goroutines + tests |
-| S8     | U4 - Tema 8 + Integración      | Optimización, documentación, visualización futuro + entrega final | Repo completo + Informe |
+## 📅 Cronograma Detallado de Actividades
 
-**Objetivo:** Sistema de gestión empresarial que integra las 4 unidades.
+| Semana | Unidad | Tema | Actividad Principal | Entregable Principal | Estado |
+|:---:|:---:|:---:|:---|:---:|
+| **1** | **U1** | Temas 1, 2 | Selección del sistema, objetivos y planificación inicial. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **1** | **U1** | Temas 3, 4 | Definición de objetivos, planificación inicial y estructura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Definición de objetivos, planificación inicial y estructura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** | **U1** | Temas 3, 4 | Estructura general, definición de arquitectura general. | Definición de objetivos y planificación inicial. | ✅ Completado |
+| **2** |......
