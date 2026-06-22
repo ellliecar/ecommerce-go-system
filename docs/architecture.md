@@ -152,24 +152,55 @@ ecommerce-go-system/
 └── main.go
 ```
 
-### Descripción de la estructura
+## Descripción de la estructura
 
 * **docs/**: documentación técnica y planificación del proyecto.
+
+* **docs/architecture.md**: documento de arquitectura del sistema.
+
+* **docs/cronograma.md**: planificación y cronograma de desarrollo.
+
 * **internal/api/**: controladores y endpoints de los servicios web REST.
+
+* **internal/api/handlers.go**: implementación de rutas y manejo de solicitudes HTTP.
+
 * **internal/errors/**: definición de errores personalizados del dominio.
-* **internal/interfaces/**: contratos e interfaces utilizadas por el sistema.
+
+* **internal/errors/domain.go**: catálogo de errores de negocio utilizados por el sistema.
+
+* **internal/interfaces/**: contratos e interfaces utilizadas por la aplicación.
+
+* **internal/interfaces/contracts.go**: definición de interfaces para desacoplar componentes.
+
 * **internal/models/**: entidades y modelos de negocio.
+
+* **internal/models/product.go**: estructura y comportamiento de los productos.
+
 * **internal/services/**: implementación de la lógica de negocio.
-* **tests/**: pruebas unitarias e integración.
+
+* **internal/services/order.go**: procesamiento de pedidos, validaciones y control de inventario.
+
+* **tests/**: pruebas unitarias e integración del sistema.
+
+* **tests/api_test.go**: pruebas de los servicios web.
+
+* **tests/product_test.go**: pruebas de la entidad Product.
+
+* **tests/service_test.go**: pruebas de la lógica de negocio.
+
 * **main.go**: punto de entrada principal de la aplicación.
-* **go.mod**: gestión de dependencias del proyecto Go.
-* **README.md**: documentación general del repositorio.
-* **LICENSE**: licencia del proyecto.
+
+* **go.mod**: gestión de dependencias y configuración del módulo Go.
+
+* **README.md**: documentación principal del proyecto.
+
+* **LICENSE**: licencia de distribución del software.
+
+* **.gitignore**: configuración de archivos excluidos del control de versiones.
 
 ```
+`
 ```
-
-
 ---
 
 # 5. Componentes Principales
