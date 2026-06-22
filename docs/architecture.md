@@ -201,7 +201,7 @@ ecommerce-go-system/
 ```
 `
 ```
----
+
 
 # 5. Componentes Principales
 
