@@ -120,18 +120,55 @@ Toda la comunicación entre cliente y servidor utiliza formato JSON para garanti
 
 ```text
 ecommerce-go-system/
-├── main.go
-├── go.mod
-├── README.md
+├── docs/
+│   ├── architecture.md
+│   └── cronograma.md
+│
 ├── internal/
 │   ├── api/
+│   │   └── handlers.go
+│   │
 │   ├── errors/
+│   │   └── domain.go
+│   │
 │   ├── interfaces/
+│   │   └── contracts.go
+│   │
 │   ├── models/
+│   │   └── product.go
+│   │
 │   └── services/
+│       └── order.go
+│
 ├── tests/
-└── docs/
+│   ├── api_test.go
+│   ├── product_test.go
+│   └── service_test.go
+│
+├── .gitignore
+├── LICENSE
+├── README.md
+├── go.mod
+└── main.go
 ```
+
+### Descripción de la estructura
+
+* **docs/**: documentación técnica y planificación del proyecto.
+* **internal/api/**: controladores y endpoints de los servicios web REST.
+* **internal/errors/**: definición de errores personalizados del dominio.
+* **internal/interfaces/**: contratos e interfaces utilizadas por el sistema.
+* **internal/models/**: entidades y modelos de negocio.
+* **internal/services/**: implementación de la lógica de negocio.
+* **tests/**: pruebas unitarias e integración.
+* **main.go**: punto de entrada principal de la aplicación.
+* **go.mod**: gestión de dependencias del proyecto Go.
+* **README.md**: documentación general del repositorio.
+* **LICENSE**: licencia del proyecto.
+
+```
+```
+
 
 ---
 
