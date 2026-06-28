@@ -3,72 +3,39 @@ package services
 import (
 	"fmt"
 	"sync"
-	"ecommerce-go-system/internal/errors"
-	"ecommerce-go-system/internal/interfaces"
+
+	"ecommerce-go-system/internal/models"
 )
 
-// OrderService: Orquestador con concurrencia segura (sync.RWMutex)
 type OrderService struct {
-	mu                sync.RWMutex
-	catalog           map[string]interfaces.IProduct
-	orderQueue        []string
-	processedSessions map[string]bool
+	products map[string]*models.Product
+	mu       sync.RWMutex
 }
 
 func NewOrderService() *OrderService {
 	return &OrderService{
-		catalog:           make(map[string]interfaces.IProduct),
-		orderQueue:        make([]string, 0),
-		processedSessions: make(map[string]bool),
+		products: make(map[string]*models.Product),
 	}
 }
 
-func (os *OrderService) AddProduct(p interfaces.IProduct) error {
-	os.mu.Lock()
-	defer os.mu.Unlock()
-	if _, exists := os.catalog[p.GetID()]; exists {
-		return fmt.Errorf("product %s already exists", p.GetID())
-	}
-	os.catalog[p.GetID()] = p
-	return nil
+func (s *OrderService) AddProduct(p *models.Product) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.products[p.GetID()] = p
 }
 
-// ProcessOrder: Validación → Mutación controlada → Encolado → Trazabilidad
-func (os *OrderService) ProcessOrder(productID string, qty int, userID string) (string, error) {
-	sessionKey := fmt.Sprintf("%s::%s", productID, userID)
+func (s *OrderService) ProcessOrder(productID string, qty int, userID string) (string, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 
-	os.mu.RLock()
-	if os.processedSessions[sessionKey] {
-		os.mu.RUnlock()
-		return "", errors.ErrDuplicateRequest
-	}
-	product, exists := os.catalog[productID]
+	product, exists := s.products[productID]
 	if !exists {
-		os.mu.RUnlock()
-		return "", errors.ErrProductNotFound
-	}
-	if !product.IsAvailable(qty) {
-		os.mu.RUnlock()
-		return "", errors.ErrInsufficientStock
-	}
-	os.mu.RUnlock()
-
-	err := product.ReduceStock(qty)
-	if err != nil {
-		return "", fmt.Errorf("%w: %v", errors.ErrPaymentFailed, err)
+		return "", fmt.Errorf("producto no encontrado")
 	}
 
-	os.mu.Lock()
-	os.processedSessions[sessionKey] = true
-	os.orderQueue = append(os.orderQueue, fmt.Sprintf("%s|%d|%s", productID, qty, userID))
-	queueSize := len(os.orderQueue)
-	os.mu.Unlock()
+	if err := product.ReduceStock(qty); err != nil {
+		return "", err
+	}
 
-	return fmt.Sprintf("Order registered. Queue size: %d", queueSize), nil
-}
-
-func (os *OrderService) GetQueueStatus() int {
-	os.mu.RLock()
-	defer os.mu.RUnlock()
-	return len(os.orderQueue)
+	return fmt.Sprintf("Pedido procesado para usuario %s", userID), nil
 }
