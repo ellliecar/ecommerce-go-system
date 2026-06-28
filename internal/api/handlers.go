@@ -36,7 +36,12 @@ func (s *Server) HealthCheck(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) ListProducts(w http.ResponseWriter, r *http.Request) {
 	s.requestCounter.Add(1)
-	jsonResponse(w, http.StatusOK, map[string]interface{}{"products": []string{"P001", "P002"}})
+	jsonResponse(w, http.StatusOK, map[string]interface{}{
+		"products": []map[string]interface{}{
+			{"id": "P001", "name": "Laptop Pro"},
+			{"id": "P002", "name": "Mouse Ergo"},
+		},
+	})
 }
 
 func (s *Server) GetProduct(w http.ResponseWriter, r *http.Request) {
@@ -53,6 +58,7 @@ func (s *Server) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewDecoder(r.Body).Decode(&req)
 
+	// Aquí llamamos al servicio (ajusta según tu order.go)
 	res, err := s.service.ProcessOrder(req.ProductID, req.Qty, req.UserID)
 	if err != nil {
 		jsonResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
@@ -67,11 +73,11 @@ func (s *Server) HandleConcurrency(w http.ResponseWriter, r *http.Request) {
 	var success atomic.Int64
 	start := time.Now()
 
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 30; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			_, err := s.service.ProcessOrder("P001", 1, "user")
+			_, err := s.service.ProcessOrder("P001", 1, "test")
 			if err == nil {
 				success.Add(1)
 			}
