@@ -1,10 +1,3 @@
-import (
-	"encoding/json"
-	"fmt"
-	"net/http"
-	"sync"
-	"sync/atomic"
-	"time"
+module ecommerce-go-system
 
-	"ecommerce-go-system/internal/services"
-)
+go 1.22
