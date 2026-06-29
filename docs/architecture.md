@@ -199,6 +199,7 @@ ecommerce-go-system/
 
 * **.gitignore**: configuración de archivos excluidos del control de versiones.
 ```
+```
 # 5. Componentes Principales
 
 ## Product
