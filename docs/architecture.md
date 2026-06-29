@@ -151,6 +151,7 @@ ecommerce-go-system/
 ├── go.mod
 └── main.go
 ```
+---
 
 ## Descripción de la estructura
 
